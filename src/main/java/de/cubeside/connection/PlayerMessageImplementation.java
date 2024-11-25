@@ -6,6 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -99,6 +101,24 @@ class PlayerMessageImplementation implements PlayerMessageAPI, Listener {
         Player p = plugin.getServer().getPlayer(player.getUniqueId());
         if (p != null) {
             p.spigot().sendMessage(message);
+        }
+    }
+
+    @Override
+    public void sendMessage(GlobalPlayer player, Component message) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+        try {
+            dos.writeByte(MESSAGE_CHAT_COMPONENTS);
+            dos.writeUTF(JSONComponentSerializer.json().serialize(message));
+            dos.close();
+        } catch (IOException ex) {
+            throw new Error("impossible");
+        }
+        player.sendData(CHANNEL, baos.toByteArray());
+        Player p = plugin.getServer().getPlayer(player.getUniqueId());
+        if (p != null) {
+            p.sendMessage(message);
         }
     }
 
