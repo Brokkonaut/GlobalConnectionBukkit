@@ -52,7 +52,15 @@ public class GlobalClientPlugin extends JavaPlugin {
         String password = getConfig().getString("client.password");
         String host = getConfig().getString("server.host");
         int port = getConfig().getInt("server.port");
-        globalClient.setServer(host, port, account, password);
+        if (!getConfig().isSet("server.connect")) {
+            getConfig().set("server.connect", true);
+            saveConfig();
+        }
+        boolean connect = getConfig().getBoolean("server.connect");
+        if (!connect) {
+            getLogger().warning("Not connecting to a server, because connecting is disabled in the config!");
+        }
+        globalClient.setServer(connect ? host : null, port, account, password);
     }
 
     public ConnectionAPI getConnectionAPI() {

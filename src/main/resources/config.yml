@@ -4,3 +4,4 @@ client:
 server:
   host: localhost
   port: 25701
+  connect: true
