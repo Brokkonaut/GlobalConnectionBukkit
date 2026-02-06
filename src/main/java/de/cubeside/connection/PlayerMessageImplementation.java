@@ -13,8 +13,6 @@ import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.Title.Times;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -87,18 +85,6 @@ class PlayerMessageImplementation implements PlayerMessageAPI, Listener {
                 plugin.getLogger().log(Level.SEVERE, "Could not parse PlayerMessage message", ex);
             }
         }
-    }
-
-    @Deprecated
-    @Override
-    public void sendMessage(GlobalPlayer player, String message) {
-        sendActionBarMessage(player, LegacyComponentSerializer.legacySection().deserialize(message));
-    }
-
-    @Deprecated
-    @Override
-    public void sendMessage(GlobalPlayer player, BaseComponent... message) {
-        sendActionBarMessage(player, JSONComponentSerializer.json().deserialize(ComponentSerializer.toString(message)));
     }
 
     @Override
