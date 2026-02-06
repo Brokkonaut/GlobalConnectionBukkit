@@ -101,20 +101,6 @@ class PlayerMessageImplementation implements PlayerMessageAPI, Listener {
         sendActionBarMessage(player, JSONComponentSerializer.json().deserialize(ComponentSerializer.toString(message)));
     }
 
-    @Deprecated
-    @Override
-    public void sendActionBarMessage(GlobalPlayer player, String message) {
-        sendActionBarMessage(player, LegacyComponentSerializer.legacySection().deserialize(message));
-    }
-
-    @Deprecated
-    @Override
-    public void sendTitleBarMessage(GlobalPlayer player, String title, String subtitle, int fadeInTicks, int durationTicks, int fadeOutTicks) {
-        Component titleComponent = title == null ? Component.empty() : LegacyComponentSerializer.legacySection().deserialize(title);
-        Component subtitleComponent = subtitle == null ? Component.empty() : LegacyComponentSerializer.legacySection().deserialize(subtitle);
-        sendTitleBarMessage(player, titleComponent, subtitleComponent, fadeInTicks, durationTicks, fadeOutTicks);
-    }
-
     @Override
     public void sendMessage(GlobalPlayer player, Component message) {
         Preconditions.checkNotNull(player, "player");
